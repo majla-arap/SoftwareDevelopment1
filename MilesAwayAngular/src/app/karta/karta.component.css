@@ -1,0 +1,124 @@
+
+p{
+  padding-top: 80px;
+}
+button{
+  margin: 0px 10px 0px 10px;
+}
+
+body{
+  position: relative;
+  height: 720px;
+  overflow: auto;
+  background-image: url("../../../../bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+
+  line-height: 1.5;
+
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+thead{
+  border-color: inherit;
+}
+.table, thead.thead-primary {
+  background: #40175b;
+
+}
+.table tbody td{
+  background-color: #be86af;
+}
+* {
+
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+.table{
+  font-size: large;
+}
+.button {
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #714292;
+  border: none;
+
+  box-shadow: 0 5px #999;
+}
+.button:hover {background-color: #9e72c4
+}
+.button:active {
+  background-color: #40175b;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.input-container {
+  position: relative;
+  transition: 0.75s ease-in;
+  border-radius: 2px 2px 0 0;
+  width: 40%;
+}
+.input-container input {
+  border: none;
+  background: #0003;
+  padding: 0.5rem;
+  outline: none;
+  transition: 0.75s ease-in;
+  color: #fffa;
+}
+.input-container::after {
+  content: "";
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(to right, #9e72c4, #714292 40%, #5b307e 60%, #40175b 75%);
+  background-size: 250%;
+  background-position: right;
+  transition: 0.75s cubic-bezier(0.8, 0, 0.2, 1);
+}
+.input-container:hover input {
+  background: #0005;
+  transition: 0.3s;
+}
+.input-container:focus-within {
+  box-shadow: -3px 1px 6px rgba(177, 13, 201, 0.5), 3px 1px 6px rgba(240, 18, 190, 0.5);
+}
+.input-container:focus-within input {
+  background: #0004;
+  color: #fffc;
+  transition: 0.75s ease-in;
+}
+.input-container:focus-within::after {
+  background-position: left;
+}
+.shadow-box{
+
+  background-color: #ce72b8;
+  color: white;
+  padding: 0px;
+  width: 80%;
+  border-radius: 4px;
+  box-shadow: 2px 2px 20px 23px #be86af;
+}
+.select{
+  background: #be86af;
+  margin-left: 10px;
+  height: 30px ;
+  width: 150px;
+}

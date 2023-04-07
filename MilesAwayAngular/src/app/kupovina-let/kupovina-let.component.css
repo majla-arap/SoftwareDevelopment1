@@ -1,0 +1,79 @@
+p{
+  padding-top: 80px;
+}
+.pretraga{
+  display: flex;
+  margin: 20px;
+  margin-left: 100px;
+
+}
+.select{
+  background: #be86af;
+
+}
+.button {
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #714292;
+  border: none;
+
+  box-shadow: 0 5px #999;
+}
+.button:hover {background-color: #9e72c4
+}
+.button:active {
+  background-color: #40175b;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+label{
+  padding: 0px 10px 0px 10px;
+}
+button{
+  margin: 0px 10px 0px 10px;
+
+}
+body{
+  position: relative;
+  height: 720px;
+  overflow: auto;
+  background-image: url("../../../../bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+
+  line-height: 1.5;
+
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+thead{
+  border-color: inherit;
+}
+.table, thead.thead-primary {
+  background: #40175b;
+
+}
+.table tbody td{
+  background-color: #be86af;
+}
+* {
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+.table{
+  font-size: large;
+}

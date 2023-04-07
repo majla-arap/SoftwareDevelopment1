@@ -1,0 +1,79 @@
+<body>
+<p></p>
+
+
+<div *ngIf="karticaPodaci!=null">
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Korisnik:</label>
+    <div class="input-container">
+      <input  [value]="karticaPodaci.imeVlasnika" disabled class="form-control" >
+
+    </div>
+  </div>
+
+  <table class="table table-warning">
+    <tr>
+
+      <th>Id</th>
+      <th>Broj</th>
+      <th>Kod</th>
+      <th>Datum</th>
+
+
+
+    </tr>
+    <tbody>
+    <tr *ngFor="let s of karticaPodaci.kartica">
+
+      <td>{{s.karticaID}}</td>
+      <td>{{s.brojKartice}}</td>
+      <td>{{s.verifikacijskiKod}}</td>
+      <td>{{s.datumIsteka|date:'shortDate'}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<button type="button" class="button" (click)="Dodaj()">Dodaj</button>
+
+<button type="button" class="button" (click)="Kupi()">Kupi</button>
+
+<div [formGroup]="frmKarticaPodaci" *ngIf="show" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel" *ngFor="let s of GetKarticaPodaci()">Dodaj karticu za {{s.imeVlasnika}}</h5>
+        <button type="button" class="btn-close" (click)="show = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Broj kartice</label>
+          <input type="text" formControlName="brojKartice" class="form-control" [(ngModel)]="brojKartice"  placeholder="xxxx xxxx xxxx xxxx">
+          <small *ngIf="frmKarticaPodaci.get('brojKartice')!.invalid && frmKarticaPodaci.get('brojKartice')!.touched" class="text-danger">Unos obavezan</small>
+
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Verifikacijski kod</label>
+          <input type="text" formControlName="verifikacijskiKod" class="form-control" [(ngModel)]="verifikacijskiKod"  placeholder="xxx">
+          <small *ngIf="frmKarticaPodaci.get('verifikacijskiKod')!.invalid && frmKarticaPodaci.get('verifikacijskiKod')!.touched" class="text-danger">Unos obavezan</small>
+
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Datum isteka</label>
+          <input type="date" formControlName="datumIsteka" class="form-control" [(ngModel)]="datumIsteka"  placeholder="xx/xx">
+          <small *ngIf="frmKarticaPodaci.get('datumIsteka')!.invalid && frmKarticaPodaci.get('datumIsteka')!.touched" class="text-danger">Unos obavezan</small>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="show = false">Close</button>
+        <button type="button" class="btn btn-primary" (click)="add()">Add</button><!--*[disabled]="!validacija()"-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>

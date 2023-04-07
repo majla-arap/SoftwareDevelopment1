@@ -1,0 +1,120 @@
+<p></p>
+
+<div *ngIf="aerodromLet!=null">
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Let ID</label>
+    <div class="col-sm-4">
+      <input [value]="aerodromLet.letID" disabled class="form-control" >
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Šifra leta</label>
+    <div class="col-sm-4">
+      <input  [value]="aerodromLet.sifraLeta" disabled class="form-control" >
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Polazište</label>
+    <div class="col-sm-4">
+      <input [value]="aerodromLet.polaziste"  disabled class="form-control" >
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Destinacija</label>
+    <div class="col-sm-4">
+      <input [value]="aerodromLet.destinacija"  disabled class="form-control" >
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Aerodrom polaska</th>
+      <th>Aerodrom dolaska</th>
+      <th>Akcija</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let s of aerodromLet.aerodromLet">
+      <td>{{s.id}}</td>
+      <td>{{s.aerodrom1.naziv}}</td>
+      <td>{{s.aerodrom2.naziv}}</td>
+      <td>
+        <a class="btn btn-link" (click)="detalji(s)">Uredi</a> <br>
+        <a class="btn btn-link" (click)="delete(s)">Obriši</a> <br>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button class="form-label" (click)="dodajAerodrom()">Dodaj aerodrome</button>
+</div>
+
+<div *ngIf="noviAerodrom!=null" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Novi aerodrom za {{aerodromLet.sifraLeta}}</h5>
+        <button type="button" class="btn-close" (click)="noviAerodrom=null" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Areodrom polaska</label>
+          <select class="form-control" [(ngModel)]="noviAerodrom.aerodromID" placeholder="Areodrom polaska">
+            <option *ngFor="let a of aerodromLet.aerodromPolaska" value="{{a.aerodromID}}">{{a.naziv}} </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Areodrom destinacije</label>
+          <select class="form-control" [(ngModel)]="noviAerodrom.aerodromID_ID" placeholder="Areodrom destinacije">
+            <option *ngFor="let a of aerodromLet.aerodromDestinacije" value="{{a.aerodromID}}">{{a.naziv}} </option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="noviAerodrom=null" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="add()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabraniAerodrom!=null" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit aerodrom za {{aerodromLet.sifraLeta}}</h5>
+        <button type="button" class="btn-close" (click)="odabraniAerodrom=null" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Areodrom polaska</label>
+          <select class="form-control" [(ngModel)]="odabraniAerodrom.aerodromID" placeholder="Areodrom polaska">
+            <option *ngFor="let a of aerodromLet.aerodromPolaska" value="{{a.aerodromID}}">{{a.naziv}} </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Areodrom destinacije</label>
+          <select class="form-control" [(ngModel)]="odabraniAerodrom.aerodromID_ID" placeholder="Areodrom destinacije">
+            <option *ngFor="let a of aerodromLet.aerodromDestinacije" value="{{a.aerodromID}}">{{a.naziv}} </option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabraniAerodrom=null" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

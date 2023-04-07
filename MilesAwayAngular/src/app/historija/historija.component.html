@@ -1,0 +1,98 @@
+<body>
+<p></p>
+<table class="table table-warning">
+  <tr>
+    <th>Polazište</th>
+    <th>Destinacija</th>
+    <th>Šifra leta</th>
+    <th>Datum kupovine</th>
+    <th>Cijena</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getHistorijaPodaci()">
+    <td>{{s.polaziste}}</td>
+    <td>{{s.destinacija}}</td>
+    <td>{{s.sifraLeta}}</td>
+    <td>{{s.datumKupovine}}</td>
+    <td>{{s.cijena}}</td>
+    <td>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div>
+  <button class="button"  (click)="Preuzmi(1)">1</button>
+  <button class="button"  (click)="Preuzmi(2)">2</button>
+  <button class="button"  (click)="Preuzmi(3)">3</button>
+  <button class="button"  (click)="Preuzmi(4)">4</button>
+  <button class="button"  (click)="Preuzmi(5)">5</button>
+</div>
+
+<div *ngIf="odabranaKarta!=null" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Podaci o karti</h5>
+        <button type="button" class="btn-close" (click)="odabranaKarta= null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Datum polaska</label>
+          <input [value]="odabranaKarta.datumPolaska" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Polazište</label>
+          <input [value]="odabranaKarta.polaziste" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum povratka</label>
+          <input [value]="odabranaKarta.datumPovratka" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Destinacija</label>
+          <input [value]="odabranaKarta.destinacija" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Šifra leta</label>
+          <input [value]="odabranaKarta.sifraLeta" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Sjedište</label>
+          <input [value]="odabranaKarta.sjediste" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Tip karte</label>
+          <input [value]="odabranaKarta.tipKarte" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Tip putnika</label>
+          <input [value]="odabranaKarta.tipPutnika" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Tip prtljage</label>
+          <input [value]="odabranaKarta.tipPrtljage" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum kupovine</label>
+          <input [value]="odabranaKarta.datumKupovine" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Popust</label>
+          <input [value]="odabranaKarta.popust" disabled class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input [value]="odabranaKarta.cijena" disabled class="form-control" >
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabranaKarta = null" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

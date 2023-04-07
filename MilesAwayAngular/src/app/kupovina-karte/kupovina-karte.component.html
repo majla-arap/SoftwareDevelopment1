@@ -1,0 +1,58 @@
+<body>
+<p></p>
+<div class="pretraga">
+  <label>Tip karte</label>
+  <select class="select" [(ngModel)]="putanjaID" >
+    <option *ngFor="let x of putanjaPodaci" value="{{x.opis}}">{{x.opis}}</option>
+  </select>
+  <br>
+  <br>
+  <button class="button" (click)="Trazi()">Traži</button>
+
+</div>
+<div *ngIf="prikaz && kartaPodaci!=null">
+  <table class="table table-warning">
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>Šifra leta</th>
+      <th>Polazište</th>
+      <th>Destinacija</th>
+      <th>Vrijeme polaska</th>
+      <th>Vrijeme dolaska</th>
+      <th>Cijena</th>
+      <th>Klasa</th>
+      <th>Sjedište</th>
+      <th>Putanja</th>
+      <th  *ngIf="kupi">Kupi</th>
+
+    </tr>
+    <tbody>
+    <tr *ngFor="let s of GetKartaPodaci()">
+      <td><input id="s1" type="checkbox" class="switch" (change)="odabir($event)"></td>
+      <td>{{s.id}}</td>
+      <td>{{s.sifra}}</td>
+      <td>{{s.polaziste}}</td>
+      <td>{{s.destinacija}}</td>
+      <td>{{s.vrijemePolaska|date:'medium'}}</td>
+      <td>{{s.vrijemeDolaska|date:'medium'}}</td>
+      <td>{{s.cijena}}</td>
+      <td>{{s.tip}}</td>
+      <td>{{s.sjediste}}</td>
+      <td>{{s.putanja}}</td>
+
+      <td *ngIf="kupi" >
+       <a class="two" (click)="dalje(s)">Kupi</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <button class="button"  (click)="Preuzmi(1)">1</button>
+    <button class="button"  (click)="Preuzmi(2)">2</button>
+    <button class="button"  (click)="Preuzmi(3)">3</button>
+    <button class="button"  (click)="Preuzmi(4)">4</button>
+    <button class="button"  (click)="Preuzmi(5)">5</button>
+  </div>
+</div>
+</body>

@@ -1,0 +1,32 @@
+<body>
+<div class="container" onclick="onclick">
+  <div class="top"></div>
+  <div class="bottom"></div>
+  <div [formGroup]="frmRegistracijaPodaci" class="center">
+
+    <input id="txtIme" formControlName="txtIme" [(ngModel)]="txtIme" class="form-control" placeholder="Ime">
+    <small *ngIf="frmRegistracijaPodaci.get('txtIme')!.invalid && frmRegistracijaPodaci.get('txtIme')!.touched" class="text-danger">* Unesite ime</small>
+
+    <input id="txtPrezime" formControlName="txtPrezime" [(ngModel)]="txtPrezime" class="form-control" placeholder="Prezime">
+    <small *ngIf="frmRegistracijaPodaci.get('txtPrezime')!.invalid && frmRegistracijaPodaci.get('txtPrezime')!.touched" class="text-danger">* Unesite prezime</small>
+
+    <input id="txtEmail" formControlName="txtEmail" [(ngModel)]="txtEmail" class="form-control" placeholder="Email">
+    <small *ngIf="frmRegistracijaPodaci.get('txtEmail')!.invalid && frmRegistracijaPodaci.get('txtEmail')!.touched" class="text-danger">* Unesite email</small>
+
+    <input id="txtKorisnickoIme" formControlName="txtKorisnickoIme" [(ngModel)]="txtKorisnickoIme" class="form-control" placeholder="Korisnicko ime">
+    <small *ngIf="frmRegistracijaPodaci.get('txtKorisnickoIme')!.invalid && frmRegistracijaPodaci.get('txtKorisnickoIme')!.touched" class="text-danger">* Unesite korisničko ime</small>
+
+    <input id="txtLozinka" formControlName="txtLozinka" [(ngModel)]="txtLozinka" class="form-control" type="password" placeholder="Lozinka">
+    <small *ngIf="frmRegistracijaPodaci.get('txtLozinka')!.invalid && frmRegistracijaPodaci.get('txtLozinka')!.touched" class="text-danger">* Unesite lozinku</small>
+
+    <button type="button" class="btn " [disabled]="!validacija()" (click)="Add()">Registruj se</button>
+    <a routerLink="/login" class="button7">Login</a>
+
+
+    <h2>&nbsp;</h2>
+  </div>
+</div>
+
+
+
+</body>

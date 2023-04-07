@@ -1,0 +1,173 @@
+<body>
+<p>
+  Unesite filter za pretragu pilota <input class="input-container" [(ngModel)]="tekst">
+</p>
+<button type="button" class="button" (click)="btnNovi()">Novi pilot</button>
+<br>
+<br>
+
+
+
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Ime</th>
+    <th>Prezime</th>
+    <th>Broj dozvole</th>
+    <th>Datum rođenja</th>
+    <th>Datum zaposlenja</th>
+    <th>Spol</th>
+    <th>JMBG</th>
+    <th>Kontakt</th>
+    <th>Adresa</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getPilotPodaci()">
+    <td>{{s.pilotID}}</td>
+    <td>{{s.ime}}</td>
+    <td>{{s.prezime}}</td>
+    <td>{{s.brojDozvole}}</td>
+    <td>{{s.datumRodjenja}}</td>
+    <td>{{s.datumZaposlenja}}</td>
+    <td>{{s.spol}}</td>
+    <td>{{s.jmbg}}</td>
+    <td>{{s.kontakt}}</td>
+    <td>{{s.adresa}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+<div [formGroup]="frmPilotPodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add pilot</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Ime pilota</label>
+          <input type="text" formControlName="ime" class="form-control" [(ngModel)]="ime"  placeholder="Ime pilota">
+          <small *ngIf="frmPilotPodaci.get('ime')!.invalid && frmPilotPodaci.get('ime')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Prezime pilota</label>
+          <input type="text" formControlName="prezime" class="form-control" [(ngModel)]="prezime"  placeholder="Prezime pilota">
+          <small *ngIf="frmPilotPodaci.get('prezime')!.invalid && frmPilotPodaci.get('prezime')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Broj dozvole</label>
+          <input type="text" formControlName="brojDozvole" class="form-control" [(ngModel)]="brojDozvole"  placeholder="Broj dozvole">
+          <small *ngIf="frmPilotPodaci.get('brojDozvole')!.invalid && frmPilotPodaci.get('brojDozvole')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum rođenja</label>
+          <input type="text" formControlName="datumRodjenja" class="form-control" [(ngModel)]="datumRodjenja"  placeholder="Datum rođenja">
+          <small *ngIf="frmPilotPodaci.get('datumRodjenja')!.invalid && frmPilotPodaci.get('datumRodjenja')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum zaposlenja</label>
+          <input type="text" formControlName="datumZaposlenja" class="form-control" [(ngModel)]="datumZaposlenja"  placeholder="Datum zaposlenja">
+          <small *ngIf="frmPilotPodaci.get('datumZaposlenja')!.invalid && frmPilotPodaci.get('datumZaposlenja')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Spol</label>
+          <input type="text" formControlName="spol" class="form-control" [(ngModel)]="spol"  placeholder="Spol">
+          <small *ngIf="frmPilotPodaci.get('spol')!.invalid && frmPilotPodaci.get('spol')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">JMBG</label>
+          <input type="text" formControlName="jmbg" class="form-control" [(ngModel)]="jmbg"  placeholder="JMBG">
+          <small *ngIf="frmPilotPodaci.get('jmbg')!.invalid && frmPilotPodaci.get('jmbg')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Kontakt</label>
+          <input type="text" formControlName="kontakt" class="form-control" [(ngModel)]="kontakt"  placeholder="Kontakt">
+          <small *ngIf="frmPilotPodaci.get('kontakt')!.invalid && frmPilotPodaci.get('kontakt')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Adresa</label>
+          <input type="text" formControlName="adresa" class="form-control" [(ngModel)]="adresa"  placeholder="Adresa">
+          <small *ngIf="frmPilotPodaci.get('adresa')!.invalid && frmPilotPodaci.get('adresa')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabraniPilot!=null" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit pilot</h5>
+        <button type="button" class="btn-close" (click)="odabraniPilot = null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Ime pilota</label>
+          <input type="text" class="form-control" [(ngModel)]="odabraniPilot.ime"  placeholder="Ime pilota">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Prezime pilota</label>
+          <input type="text" class="form-control" [(ngModel)]="odabraniPilot.prezime"  placeholder="Prezime pilota">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Broj dozvole</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniPilot.brojDozvole"  placeholder="Broj dozvole">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum rođenja</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniPilot.datumRodjenja"  placeholder="Datum rođenja">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum zaposlenja</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniPilot.datumZaposlenja"  placeholder="Datum zaposlenja">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Spol</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniPilot.spol"  placeholder="Spol">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">JMBG</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniPilot.jmbg"  placeholder="JMBG">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Kontakt</label>
+          <input type="text" class="form-control" [(ngModel)]="odabraniPilot.kontakt"  placeholder="Kontakt">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Adresa</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniPilot.adresa"  placeholder="Adresa">
+         <br>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabraniPilot = null " >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,137 @@
+<body>
+<p></p>
+
+<button class="form-label"class="button"(click)="btnNovi()">Novi avion</button>
+<br>
+<br>
+<label>Izaberite aviokopmaniju za pretragu </label>
+<select class="select"  [(ngModel)]="nrSelect" (change)="basedOnSel($event)">
+  <option *ngFor="let aviokompanija of GetAviokompanijaPodatke()" [value]="aviokompanija.opis"> {{aviokompanija.opis}}</option>
+</select>
+<br>
+<br>
+<h4>Lista aviona</h4>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Naziv</th>
+    <th>Broj Registracije</th>
+    <th>Broj sjedišta</th>
+    <th>Business klasa</th>
+    <th>Prva klasa</th>
+    <th>Datum servisa</th>
+    <th>Aviokompanija ID</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of GetAvionPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.opis}}</td>
+    <td>{{s.brojRegistracije}}</td>
+    <td>{{s.brojMaxSjedista}}</td>
+    <td>{{s.brojSjedistaBusiness}}</td>
+    <td>{{s.brojSjedistaPrveKlase}}</td>
+    <td>{{s.datumZadnjegServisa}}</td>
+    <td>{{s.aviokompanija_ID}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+
+<div [formGroup]="frmAvionPodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add avion</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label class="form-label">Broj registracije</label>
+          <input type="text" formControlName="brojRegistracije" class="form-control" [(ngModel)]="brojRegistracije"  placeholder="Broj registracije">
+          <small *ngIf="frmAvionPodaci.get('brojRegistracije')!.invalid && frmAvionPodaci.get('brojRegistracije')!.touched" class="text-danger">Unos obavezan</small>
+
+        </div>
+        <div class="mb-3">
+        <label class="form-label">Broj sjedišta</label>
+        <input  formControlName="brojMaxSjedista" class="form-control" [(ngModel)]="brojMaxSjedista"  placeholder="Broj sjedišta">
+          <small *ngIf="frmAvionPodaci.get('brojMaxSjedista')!.invalid && frmAvionPodaci.get('brojMaxSjedista')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+        <div class="mb-3">
+        <label class="form-label">Business klasa</label>
+        <input  formControlName="brojSjedistaBusiness" class="form-control" [(ngModel)]="brojSjedistaBusiness"  placeholder="Business klasa">
+          <small *ngIf="frmAvionPodaci.get('brojSjedistaBusiness')!.invalid && frmAvionPodaci.get('brojSjedistaBusiness')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+        <div class="mb-3">
+        <label class="form-label">Prva klasa</label>
+        <input  formControlName="brojSjedistaPrveKlase" class="form-control" [(ngModel)]="brojSjedistaPrveKlase"  placeholder="Prva klasa">
+          <small *ngIf="frmAvionPodaci.get('brojSjedistaPrveKlase')!.invalid && frmAvionPodaci.get('brojSjedistaPrveKlase')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+        <div class="mb-3">
+        <label class="form-label">Datum servisa</label>
+        <input type="text" formControlName="datumZadnjegServisa" class="form-control" [(ngModel)]="datumZadnjegServisa"  placeholder="Datum servisa">
+          <small *ngIf="frmAvionPodaci.get('datumZadnjegServisa')!.invalid && frmAvionPodaci.get('datumZadnjegServisa')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Aviokompanija ID</label>
+          <br>
+          <select class="form-control" formControlName="aviokompanija_ID" [(ngModel)]="aviokompanija_ID" (change)="avionAviokompanija($event)">
+            <option *ngFor="let g of GetAviokompanijaPodatke()" [value]="g.id"> {{g.opis}} </option>
+          </select>
+
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow=false" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabraniavion!=null && odabraniavion.prikazi" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit aviona</h5>
+        <button type="button" class="btn-close" (click)="odabraniavion = null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label class="form-label">Broj registracije</label>
+          <input type="text" class="form-control" [(ngModel)]="odabraniavion.brojRegistracije"  placeholder="Broj registracije">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Broj sjedišta</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniavion.brojMaxSjedista"  placeholder="Max broj sjedišta">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Business klasa </label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniavion.brojSjedistaBusiness"  placeholder="Broj sjediša business klase">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Prva klasa</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniavion.brojSjedistaPrveKlase"  placeholder="Broj sjedišta prve klase">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum zadnjeg servisa</label>
+          <input type="text"  class="form-control" [(ngModel)]="odabraniavion.datumZadnjegServisa"  placeholder="Datum zadnjeg servisa">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabraniavion = null " >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+

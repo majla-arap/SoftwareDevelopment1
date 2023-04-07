@@ -1,0 +1,108 @@
+<p>let-avion works!</p>
+
+<div *ngIf="avionLet!=null">
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Let ID</label>
+    <div class="col-sm-4">
+      <input [value]="avionLet.letID" disabled class="form-control" >
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Šifra leta</label>
+    <div class="col-sm-4">
+      <input  [value]="avionLet.sifraLeta" disabled class="form-control" >
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Polazište</label>
+    <div class="col-sm-4">
+      <input [value]="avionLet.polaziste"  disabled class="form-control" >
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Destinacija</label>
+    <div class="col-sm-4">
+      <input [value]="avionLet.destinacija"  disabled class="form-control" >
+    </div>
+  </div>
+
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Avion</th>
+      <th>Akcija</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let s of avionLet.avionLetGet">
+      <td>{{s.id}}</td>
+      <td >{{s.avion}}</td>
+
+      <td>
+        <a class="btn btn-link" (click)="detalji(s)">Uredi</a> <br>
+        <a class="btn btn-link" (click)="delete(s)">Obriši</a> <br>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button class="form-label" (click)="dodajAvion()">Dodaj Avion</button>
+</div>
+
+<div *ngIf="noviAvion!=null" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Novi avion za {{avionLet.sifraLeta}}</h5>
+        <button type="button" class="btn-close" (click)="noviAvion=null" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Avion</label>
+          <select class="form-control" [(ngModel)]="noviAvion.id" placeholder="avion">
+            <option *ngFor="let a of avioni" value="{{a.id}}">{{a.brojRegistracije}} </option>
+          </select>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="noviAvion=null" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="add()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabraniAvion!=null" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit aviona za {{avionLet.sifraLeta}}</h5>
+        <button type="button" class="btn-close" (click)="odabraniAvion=null" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Avion </label>
+          <select class="form-control" [(ngModel)]="odabraniAvion.avionID" placeholder="avion">
+            <option *ngFor="let a of avioni" value="{{a.id}}">{{a.brojRegistracije}} </option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabraniAvion=null" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

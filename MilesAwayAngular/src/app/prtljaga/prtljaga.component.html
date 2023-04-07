@@ -1,0 +1,38 @@
+<body>
+<p></p>
+<h2>Tip prtljage</h2>
+<table>
+  <tr>
+    <th>Naziv</th>
+    <th>Cijena</th>
+    <th></th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getPrtljagaPodaci()">
+    <td >{{s.naziv}}</td>
+    <td>{{s.dodatak}}</td>
+    <td><input type="checkbox" class="switch" (change)="prtljaga($event,s)"></td>
+
+  </tr>
+  </tbody>
+</table>
+<h2>Tip putnika</h2>
+<table>
+  <tr>
+    <th>Naziv</th>
+    <th>Cijena</th>
+    <th></th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getTipPutnikaPodaci()">
+    <td >{{s.naziv}}</td>
+    <td>{{s.cijena}}</td>
+    <td><input type="checkbox" class="switch" (change)="putnik($event,s)"></td>
+
+  </tr>
+  </tbody>
+</table>
+
+<button class="button" (click)="dalje()">Dalje</button>
+
+</body>

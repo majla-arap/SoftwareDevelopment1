@@ -1,0 +1,144 @@
+<body>
+<p>
+  Unesite filter za pretragu obavijesti <input class="input-container" [(ngModel)]="tekst">
+</p>
+<button type="button" class="button" (click)="btnNovi()">Nova obavijest</button>
+<br>
+<br>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Naslov</th>
+    <th>Pod naslov</th>
+    <th>Opis</th>
+    <th>Kategorija obavijesti</th>
+    <th>Slika</th>
+    <th>Datum kreiranja</th>
+    <th>Evidentirao</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getObavijestPodatke()">
+    <td>{{s.obavijestID}}</td>
+    <td>{{s.naslov}}</td>
+    <td>{{s.podNaslov}}</td>
+    <td>{{s.opis}}</td>
+    <td>{{s.obavijestKategorija.naziv}}</td>
+    <td><img class="obavijest-slika" src="{{s.slika_}}"></td>
+    <td>{{s.datumKreiranja}}</td>
+    <td>{{s.menadzer.ime}} {{s.menadzer.prezime}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+      <button class="button" (click)="slika(s)">Dodaj sliku</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+<div>
+  <button class="button"  (click)="Preuzmi(1)">1</button>
+  <button class="button"  (click)="Preuzmi(2)">2</button>
+  <button class="button"  (click)="Preuzmi(3)">3</button>
+  <button class="button"  (click)="Preuzmi(4)">4</button>
+  <button class="button"  (click)="Preuzmi(5)">5</button>
+</div>
+
+<div *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add obavijest</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naslov</label>
+          <input type="text" class="form-control" [(ngModel)]="naslov"  placeholder="Naslov">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Podnaslov</label>
+          <input type="text" class="form-control" [(ngModel)]="podNaslov"  placeholder="Podnaslov">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Opis</label>
+          <input type="text" class="form-control" [(ngModel)]="opis"  placeholder="Opis">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Obavijest kategorija</label>
+          <select class="form-control" [(ngModel)]="obavijestKategorijeID" placeholder="Obavijest kategorija">
+            <option *ngFor="let o of obavijestKategorijaPodaci" value="{{o.obavijestKategorijeID}}">{{o.naziv}} </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum kreiranja</label>
+          <input type="text" class="form-control" [(ngModel)]="datumKreiranja"  placeholder="Datum kreiranja">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabranaObavijest!=null" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit obavijest</h5>
+        <button type="button" class="btn-close" (click)="odabranaObavijest = null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naslov</label>
+          <input type="text" class="form-control" [(ngModel)]="odabranaObavijest.naslov"  placeholder="Naslov">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Podnaslov</label>
+          <input type="text" class="form-control" [(ngModel)]="odabranaObavijest.podNaslov"  placeholder="Podnaslov">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Opis</label>
+          <input type="text" class="form-control" [(ngModel)]="odabranaObavijest.opis"  placeholder="Opis">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum kreiranja</label>
+          <input type="text" class="form-control" [(ngModel)]="odabranaObavijest.datumKreiranja"  placeholder="Datum kreiranja">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Obavijest kategorija</label>
+          <select class="form-control" [(ngModel)]="odabranaObavijest.obavijestKategorijeID" placeholder="Obavijest kategorija">
+            <option *ngFor="let o of obavijestKategorijaPodaci" value="{{o.obavijestKategorijeID}}">{{o.naziv}} </option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabranaObavijest = null " >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="prikaz" class="modal fade show" id="exampleModalLive2" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel2">Dodaj sliku za obavijest</h5>
+        <button type="button" class="btn-close" (click)="prikaz = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Izaberi fajl:</label>
+          <input type="file" class="form-control" required (change)="handleFileInput($event.target)">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="prikaz = false" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="uploadImage()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

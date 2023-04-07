@@ -1,0 +1,54 @@
+<body>
+<p>
+  Unesite filter za pretragu tipa prtljage <input class="input-container" [(ngModel)]="tekst">
+</p>
+<button type="button" class="button" (click)="btnNovi()">Novi tip prtljage</button>
+<br>
+<br>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Naziv</th>
+    <th>Cijena</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getPrtljagaPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.naziv}}</td>
+    <td>{{s.dodatak}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+<div [formGroup]="frmTipPrtljagePodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add tip prtljage</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input  type="text" formControlName="naziv" class="form-control" [(ngModel)]="naziv"  placeholder="Naziv">
+          <small *ngIf="frmTipPrtljagePodaci.get('naziv')!.invalid && frmTipPrtljagePodaci.get('naziv')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input type="text" formControlName="dodatak" class="form-control" [(ngModel)]="dodatak" placeholder="Cijena">
+          <small *ngIf="frmTipPrtljagePodaci.get('dodatak')!.invalid && frmTipPrtljagePodaci.get('dodatak')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>

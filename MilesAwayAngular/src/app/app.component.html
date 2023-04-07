@@ -1,0 +1,82 @@
+<nav *ngIf="loginInfo().isLogiran" class="navbar fixed-top navbar-expand-lg navbar-dark " style="background-color: #4F326B;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MilesAway</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#" routerLink="/home">Home</a>
+        </li>
+        <li  *ngIf="loginInfo().isPermisijaMenadzer" class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" id="navbarLokacijaLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lokacija</a>
+          <div class="dropdown-menu" aria-labelledby="navbarLokacijaLink">
+            <a class="dropdown-item" routerLink="/drzava" >Država</a>
+            <a class="dropdown-item" routerLink="/grad" >Grad</a>
+            <a class="dropdown-item" routerLink="/aerodrom" >Aerodrom</a>
+          </div>
+        </li>
+        <li  *ngIf="loginInfo().isPermisijaMenadzer" class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" href="#" id="navbarZaposleniciLink"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Zaposlenici</a>
+          <div class="dropdown-menu" aria-labelledby="navbarZaposleniciLink">
+            <a class="dropdown-item"routerLink="/pilot" >Piloti</a>
+          </div>
+        </li>
+        <li  *ngIf="loginInfo().isPermisijaMenadzer" class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" id="navbarPrevozLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prevoz</a>
+          <div class="dropdown-menu" aria-labelledby="navbarPrevozLink">
+            <a class="dropdown-item" routerLink="/avion" >Avion</a>
+            <a class="dropdown-item" routerLink="/aviokompanija" >Aviokompanija</a>
+          </div>
+        </li>
+        <li *ngIf="loginInfo().isPermisijaMenadzer" class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" id="navbarKartaLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Karta</a>
+          <div class="dropdown-menu" aria-labelledby="navbarKartaLink">
+            <a class="dropdown-item" routerLink="/tipKarte">Tip karte</a>
+            <a class="dropdown-item" routerLink="/tipPutnika">Tip putnika</a>
+            <a class="dropdown-item" routerLink="/tipPrtljage">Tip prtljage</a>
+            <a class="dropdown-item" routerLink="/popust">Vrsta popusta</a>
+            <a class="dropdown-item" routerLink="/karta">Karta</a>
+          </div>
+        </li>
+        <li *ngIf="loginInfo().isPermisijaMenadzer" class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" id="navbarLetLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Let</a>
+          <div class="dropdown-menu" aria-labelledby="navbarLetLink">
+            <a class="dropdown-item" routerLink="/let" >Let</a>
+            <a class="dropdown-item" routerLink="/presjedanje" >Presjedanje</a>
+          </div>
+        </li>
+        <li *ngIf="loginInfo().isPermisijaMenadzer" class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" id="navbarObavijestLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Obavijesti</a>
+          <div class="dropdown-menu" aria-labelledby="navbarObavijestLink">
+            <a class="dropdown-item" routerLink="/obavijest-kategorija" >Obavijest kategorije</a>
+            <a class="dropdown-item" routerLink="/obavijest" >Obavijest</a>
+          </div>
+        </li>
+        <li  *ngIf="loginInfo().isPermisijaKupac" class="nav-item">
+          <a class="nav-link" routerLink="/kupovina">Kupovina</a>
+        </li>
+        <li  *ngIf="loginInfo().isPermisijaKupac" class="nav-item">
+          <a class="nav-link" routerLink="/historija">Historija</a>
+        </li>
+        <li *ngIf="loginInfo().isPermisijaKupac" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarProfilLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profil</a>
+          <div class="dropdown-menu" aria-labelledby="navbarProfilLink">
+            <a  class="dropdown-item" routerLink="/profil">Vidi profil</a>
+            <a  class="dropdown-item" routerLink="/kartica">Kartica</a>
+            <hr class="dropdown-divider">
+          </div>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" (click)="logoutButton()" >Odjava</a>
+
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<router-outlet></router-outlet>

@@ -1,0 +1,114 @@
+p{
+  padding-top: 50px;
+}
+body{
+  position: relative;
+  height: 720px;
+  overflow: auto;
+  background-image: url("../../../../bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+
+}
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
+
+#containter {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+#welcome {
+  min-width: 455px;
+  color: white;
+  font-size: 15em;
+  font-family: Sacramento;
+  text-align: center;
+  margin-bottom: -120px;
+  padding-bottom: 0;
+  color: #f3b4f3;
+  filter: drop-shadow(1px 1px #f13ff7) drop-shadow(-1px -1px #f13ff7)
+  drop-shadow(1px -1px #f13ff7) drop-shadow(-1px 1px #f13ff7);
+  animation: glow infinite 3s, flicker infinite 7s, fade infinite 5s;
+}
+
+@keyframes glow {
+  0% {
+    filter: drop-shadow(2px 2px 4px #c61af8) drop-shadow(2px -2px 6px #c61af8)
+    drop-shadow(3px -3px 3px #ac0ef0);
+  }
+
+  50% {
+    filter: drop-shadow(2px -4px 7px #e82bfb) drop-shadow(4px -3px 3px #e82bfb);
+  }
+
+  75% {
+    filter: drop-shadow(3px 2px 4px #c61af8) drop-shadow(2px -3px 2px #c61af8)
+    drop-shadow(3px -3px 6px #ac0ef0);
+  }
+
+  100% {
+    filter: drop-shadow(2px 2px 4px #c61af8) drop-shadow(2px -2px 4px #c61af8)
+    drop-shadow(3px -3px 3px #ac0ef0);
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+  24% {
+    color: rgba(243, 180, 243, 1);
+  }
+  25% {
+    color: rgba(250, 218, 250, 0.3);
+  }
+  26% {
+    color: rgba(243, 180, 243, 1);
+  }
+
+  29% {
+    color: rgba(243, 180, 243, 1);
+  }
+  30% {
+    color: rgba(250, 218, 250, 0.4);
+  }
+  31% {
+    color: rgba(243, 180, 243, 1);
+  }
+}
+
+@keyframes fade {
+  0% {
+    color: rgba(243, 180, 243, 1);
+  }
+
+  25% {
+    color: rgba(243, 180, 243, 0.9);
+  }
+
+  30% {
+    color: rgba(243, 180, 243, 0.8);
+  }
+
+  40% {
+    color: rgba(243, 180, 243, 0.9);
+  }
+
+  45% {
+    color: rgba(243, 180, 243, 0.8);
+  }
+
+  48% {
+    color: rgba(243, 180, 243, 0.9);
+  }
+
+  60% {
+    color: rgba(243, 180, 243, 1);
+  }
+}

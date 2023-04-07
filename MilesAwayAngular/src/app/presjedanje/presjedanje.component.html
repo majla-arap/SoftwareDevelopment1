@@ -1,0 +1,121 @@
+<body>
+<p></p>
+<button class="form-label"  class="button" (click)="btnNovi()">Novo presjedanje</button>
+<br>
+<br>
+<label>Izaberite let za pretragu</label>
+
+<select class="select" [(ngModel)]="nrSelect" (change)="basedOnSel($event)">
+  <option *ngFor="let l of GetLetovePodatke()" [value]="l.sifraLeta"> {{l.sifraLeta}} </option>
+</select><br><br>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Mjesto presjedanja</th>
+    <th>Sifra leta</th>
+    <th>Vrijeme dolaska</th>
+    <th>Vrijeme polaska</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of GetPresjedanjePodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.grad}}</td>
+    <td>{{s.sifraLeta}}</td>
+    <td>{{s.vrijemeDolaska}}</td>
+    <td>{{s.vrijemePolaska}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+<div [formGroup]="frmPresjedanjePodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add presjedanje</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Let</label>
+          <br>
+          <select class="form-control" formControlName="letID" [(ngModel)]="letID" (change)="presjedanjeLet($event)">
+            <option *ngFor="let l of GetLetovePodatke()" [value]="l.id"> {{l.sifraLeta}} </option>
+          </select>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Grad</label>
+          <br>
+          <select class="form-control" formControlName="gradID" [(ngModel)]="gradID" (change)="presjedanjeGrad($event)">
+            <option *ngFor="let g of GetGradovePodatke()" [value]="g.id"> {{g.opis}} </option>
+          </select>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Vrijeme dolaska</label>
+          <input type="text" formControlName="vrijemeDolaska" class="form-control" [(ngModel)]="vrijemeDolaska"  placeholder="Vrijeme dolaska">
+          <small *ngIf="frmPresjedanjePodaci.get('vrijemeDolaska')!.invalid && frmPresjedanjePodaci.get('vrijemeDolaska')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Vrijeme polaska</label>
+          <input type="text" formControlName="vrijemePolaska" class="form-control" [(ngModel)]="vrijemePolaska"  placeholder="Vrijeme polaska">
+          <small *ngIf="frmPresjedanjePodaci.get('vrijemePolaska')!.invalid && frmPresjedanjePodaci.get('vrijemePolaska')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabranoPresjedanje!=null" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit presjedanje</h5>
+        <button type="button" class="btn-close" (click)="odabranoPresjedanje = null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Let</label>
+          <br>
+          <select class="form-control" [(ngModel)]="odabranoPresjedanje.letID" (change)="presjedanjeLetUpdate($event)">
+            <option *ngFor="let l of GetLetovePodatke()" [value]="l.id"> {{l.sifraLeta}} </option>
+          </select>
+          <br>
+          <!--<input class="form-control" [(ngModel)]="odabranoPresjedanje.letID"  placeholder="Let">-->
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Grad</label>
+          <br>
+          <select class="form-control" [(ngModel)]="odabranoPresjedanje.gradID" (change)="presjedanjeGradUpdate($event)">
+            <option *ngFor="let g of GetGradovePodatke()" [value]="g.id"> {{g.opis}} </option>
+          </select>
+          <br>
+          <!--<input class="form-control" [(ngModel)]="odabranoPresjedanje.gradID"  placeholder="Grad">-->
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Vrijeme dolaska</label>
+          <input class="form-control" [(ngModel)]="odabranoPresjedanje.vrijemeDolaska"  placeholder="Vrijeme dolaska">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Vrijeme polaska</label>
+          <input class="form-control" [(ngModel)]="odabranoPresjedanje.vrijemePolaska"  placeholder="Vrijeme polaska">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabranoPresjedanje = null " >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

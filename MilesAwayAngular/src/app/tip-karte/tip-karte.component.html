@@ -1,0 +1,99 @@
+<body>
+<p></p>
+
+
+<button type="button" class="button" (click)="btnNovi()">Novi tip karte</button>
+<br>
+<br>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Naziv</th>
+    <th>Cijena</th>
+    <th>Aktivan</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getTipPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.naziv}}</td>
+    <td>{{s.cijena}}</td>
+    <td>{{s.aktivan}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+
+    <button class="button" (click)="detalji(s)">Detalji</button></td>
+
+  </tr>
+  </tbody>
+</table>
+</body>
+<div [formGroup]="frmTipKarte" *ngIf="_isShow" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Add tip Karte</h5>
+        <button type="button" class="btn-close" (click)="_isShow=false" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input type="text" formControlName="naziv" class="form-control" [(ngModel)]="naziv"  placeholder="Naziv">
+          <small *ngIf="frmTipKarte.get('naziv')!.invalid && frmTipKarte.get('naziv')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input formControlName="Cijena" class="form-control" [(ngModel)]="Cijena"  placeholder="Cijena">
+          <small *ngIf="frmTipKarte.get('Cijena')!.invalid && frmTipKarte.get('Cijena')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" formControlName="IsAktivan" class="form-check-input" [(ngModel)]="IsAktivan"  placeholder="Aktivan">
+          <label class="form-check-label">Aktivan</label>
+          <small *ngIf="frmTipKarte.get('IsAktivan')!.invalid && frmTipKarte.get('IsAktivan')!.touched" class="text-danger">Unos obavezan</small>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary"[disabled]="!validacija()" (click)="add()">Add</button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="odabranitip!=null" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Edit tip Karte</h5>
+        <button type="button" class="btn-close" (click)="odabranitip = null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input class="form-control" [(ngModel)]="odabranitip.naziv"  placeholder="Naziv">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input  class="form-control" [(ngModel)]="odabranitip.cijena" placeholder="Cijena">
+        </div>
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="odabranitip.aktivan"  placeholder="Aktivan">
+          <label class="form-check-label">Aktivan</label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabranitip = null " >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+

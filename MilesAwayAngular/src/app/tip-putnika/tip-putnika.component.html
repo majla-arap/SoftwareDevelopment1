@@ -1,0 +1,80 @@
+<body>
+<p>
+Unesite filter za pretragu tipa putnika <input class="input-container" [(ngModel)]="tekst">
+</p>
+<button type="button" class="button" (click)="btnNovi()">Novi tip prtljage</button>
+<br>
+<br>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Naziv</th>
+    <th>Cijena</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getPrtljagaPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.naziv}}</td>
+    <td>{{s.cijena}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+<div [formGroup]="frmTipPutnikaPodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add tip putnika</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input  type="text" formControlName="naziv" class="form-control" [(ngModel)]="naziv"  placeholder="Naziv">
+          <small *ngIf="frmTipPutnikaPodaci.get('naziv')!.invalid && frmTipPutnikaPodaci.get('naziv')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input type="text" formControlName="cijena" class="form-control" [(ngModel)]="cijena" placeholder="Cijena">
+          <small *ngIf="frmTipPutnikaPodaci.get('cijena')!.invalid && frmTipPutnikaPodaci.get('cijena')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="odabranitip!=null" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit tip putnika</h5>
+        <button type="button" class="btn-close" (click)="odabranitip = null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input class="form-control" [(ngModel)]="odabranitip.naziv"  placeholder="Naziv">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input  class="form-control" [(ngModel)]="odabranitip.cijena" placeholder="Cijena">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabranitip = null " >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

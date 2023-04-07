@@ -1,0 +1,154 @@
+<body>
+<p></p>
+<button class="form-label" class="button" (click)="btnNovi()">Novi let</button>
+<br>
+<br>
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Šifra leta</th>
+    <th>Polazište</th>
+    <th>Destinacija</th>
+    <th>Vrijeme polaska</th>
+    <th>Vrijeme dolaska</th>
+    <th>Jednosmjerna ciijena</th>
+    <th>Povratna cijena</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of GetLetPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.sifraLeta}}</td>
+    <td>{{s.polaziste}}</td>
+    <td>{{s.destinacija}}</td>
+    <td>{{s.vrijemePolaska}}</td>
+    <td>{{s.vrijemeDolaska}}</td>
+    <td>{{s.jednosmijernaCijena}}</td>
+    <td>{{s.povratnaCijena}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+      <button class="button" (click)="aerodrom(s)">Aerodrom</button>
+      <button class="button" (click)="avion(s)">Avion</button>
+      <button class="button" (click)="pilot(s)">Pilot</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div>
+  <button class="button"  (click)="Preuzmi(1)">1</button>
+  <button class="button"  (click)="Preuzmi(2)">2</button>
+  <button class="button"  (click)="Preuzmi(3)">3</button>
+  <button class="button"  (click)="Preuzmi(4)">4</button>
+  <button class="button"  (click)="Preuzmi(5)">5</button>
+</div>
+</body>
+<div [formGroup]="frmLetPodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Add let</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        <label class="form-label">Šifra leta</label>
+        <input type="text" formControlName="sifraLeta"  class="form-control" [(ngModel)]="sifraLeta"  placeholder="Šifra leta">
+        <small *ngIf="frmLetPodaci.get('sifraLeta')!.invalid && frmLetPodaci.get('sifraLeta')!.touched" class="text-danger">Unos obavezan</small>
+      </div>
+        <div class="mb-3">
+        <label class="form-label">Polazište</label>
+        <select class="form-control" formControlName="polazisteGradID" [(ngModel)]="polazisteGradID" >
+          <option *ngFor="let x of gradPodaci" value="{{x.id}}">{{x.opis}}</option>
+        </select>
+      </div>
+        <div class="mb-3">
+          <label class="form-label">Destinacija</label>
+          <select class="form-control" formControlName="destinacijaGradID" [(ngModel)]="destinacijaGradID" >
+            <option *ngFor="let x of gradPodaci" value="{{x.id}}">{{x.opis}}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum i vrijeme polaska</label>
+          <input type="text" formControlName="datumVrijemePolaska" class="form-control" [(ngModel)]="datumVrijemePolaska"  placeholder="Datum i vrijeme polaska">
+          <small *ngIf="frmLetPodaci.get('datumVrijemePolaska')!.invalid && frmLetPodaci.get('datumVrijemePolaska')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Vrijeme dolaska</label>
+          <input type="text" formControlName="vrijemeDolaska" class="form-control" [(ngModel)]="vrijemeDolaska"  placeholder="Vrijeme dolaska">
+          <small *ngIf="frmLetPodaci.get('vrijemeDolaska')!.invalid && frmLetPodaci.get('vrijemeDolaska')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena jednosmijerne karte</label>
+          <input type="text" formControlName="jednosmijernaCijena" class="form-control" [(ngModel)]="jednosmijernaCijena"  placeholder="Jednosmijerna cijena">
+          <small *ngIf="frmLetPodaci.get('jednosmijernaCijena')!.invalid && frmLetPodaci.get('jednosmijernaCijena')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena povratne karte</label>
+          <input type="text" formControlName="povratnaCijena" class="form-control" [(ngModel)]="povratnaCijena"  placeholder="Povratna cijena">
+          <small *ngIf="frmLetPodaci.get('povratnaCijena')!.invalid && frmLetPodaci.get('povratnaCijena')!.touched" class="text-danger">Unos obavezan</small>
+          <br>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="odabraniLet!=null && odabraniLet.prikazi" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Edit let</h5>
+        <button type="button" class="btn-close" (click)="odabraniLet.prikazi = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Šifra leta</label>
+          <input class="form-control" [(ngModel)]="odabraniLet.sifraLeta"  placeholder="Šifra leta">
+        </div>
+        <!--Treba biti u selectu upisan grad koji se vec nalazi u letu-->
+        <div class="mb-3">
+          <label class="form-label">Polazište</label>
+          <select class="form-control"  [(ngModel)]="odabraniLet.polazisteGradID" >
+            <option *ngFor="let x of gradPodaci" value="{{x.id}}">{{x.opis}}</option>
+          </select>
+        </div>
+        <!--Treba biti u selectu upisan grad koji se vec nalazi u letu-->
+        <div class="mb-3">
+          <label class="form-label">Destinacija</label>
+          <select class="form-control"  [(ngModel)]="odabraniLet.destinacijaGradID" >
+            <option *ngFor="let x of gradPodaci" value="{{x.id}}">{{x.opis}}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum i vrijeme polaska</label>
+          <input class="form-control" [(ngModel)]="odabraniLet.vrijemePolaska"  placeholder="Datum i vrijeme polaska">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Vrijeme dolaska</label>
+          <input class="form-control" [(ngModel)]="odabraniLet.vrijemeDolaska"  placeholder="Vrijeme dolaska">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena jednosmijerne karte</label>
+          <input class="form-control" [(ngModel)]="odabraniLet.jednosmijernaCijena"  placeholder="Cijena jednosmijerne karte">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena povratne karte</label>
+          <input class="form-control" [(ngModel)]="odabraniLet.povratnaCijena"  placeholder="Cijena povratne karte">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="odabraniLet.prikazi = false" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

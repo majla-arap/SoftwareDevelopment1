@@ -1,0 +1,37 @@
+<body>
+<h5>Racun</h5>
+<div *ngIf="kartaGetVM!=null">
+  <label>Datum kupovine: {{kartaGetVM.datumKupovine}}</label>
+  <br>
+  <label>Korisničko ime: {{kartaGetVM.ime}}</label>
+  <br>
+  <br>
+  <h4>Detalji leta</h4>
+  <label>Polaziste: {{kartaGetVM.polaziste}}</label>
+  <br>
+  <label>Datum polaska: {{kartaGetVM.datumPolaska}}</label>
+  <br>
+  <label>Destinacija: {{ kartaGetVM.destinacija }}</label>
+  <br>
+  <label *ngIf="kartaGetVM.povratnaBool">Datum povratka: {{ kartaGetVM.datumPovratka }}</label>
+  <br>
+  <h4>Detalji karte</h4>
+  <label>Tip karte: {{ kartaGetVM.tipKarte }}</label>
+  <br>
+  <label>Cijena karte: {{kartaGetVM.cijenaKarte}}</label>
+  <br>
+  <label>Tip prtljage: {{ kartaGetVM.tipPrtljage }}</label>
+  <br>
+  <label>Cijena prtljage: {{kartaGetVM.cijenaPrtljage}}</label>
+  <br>
+  <label>Tip putnika: {{ kartaGetVM.tipPutnika }}</label>
+  <br>
+  <label>Dodatak za tip putnika: {{kartaGetVM.dodatakTipPutnika}}</label>
+  <br>
+  <h4>Ukupni iznos: {{kartaGetVM.ukupnaCijena}} </h4>
+  <br>
+  <br>
+
+  <button class="form-label" class="button" (click)="dalje()">Dalje</button>
+</div>
+</body>

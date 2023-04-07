@@ -1,0 +1,55 @@
+<body>
+<p></p>
+<div class="pretraga">
+  <br>
+  <label>Polazište</label>
+  <select class="select" [(ngModel)]="polazisteGrad" (change)="basedOnSel($event)">
+    <option *ngFor="let x of gradPodaci" [value]="x.opis" >{{x.opis}}</option>
+  </select>
+  <br>
+
+  <label>Dolazište</label>
+  <select class="select" [(ngModel)]="destinacijaGrad" (change)="basedOnSel2($event)">
+    <option *ngFor="let x of gradPodaci" [value]="x.opis">{{x.opis}}</option>
+  </select>
+  <br>
+
+  <label>Datum polaska</label>
+  <input class="select" type="date" [(ngModel)]="datumVrijemePolaska" >
+  <br>
+
+
+
+  <br>
+  <button class="button" (click)="Trazi()">Traži</button>
+
+</div>
+<div *ngIf="prikaz && this.letPodaci!=null" >
+  <table class="table table-warning">
+    <tr>
+
+      <th>ID</th>
+      <th>Šifra leta</th>
+      <th>Polazište</th>
+      <th>Destinacija</th>
+      <th>Vrijeme polaska</th>
+      <th>Vrijeme dolaska</th>
+      <th>Karte</th>
+
+    </tr>
+    <tbody>
+    <tr *ngFor="let s of GetLetPodaci()">
+      <td>{{s.id}}</td>
+      <td>{{s.sifraLeta}}</td>
+      <td>{{s.polaziste}}</td>
+      <td>{{s.destinacija}}</td>
+      <td>{{s.datumVrijemePolaska|date:'medium'}}</td>
+      <td>{{s.vrijemeDolaska|date:'medium'}}</td>
+      <td >
+       <button class="button" (click)="Karte(s)" >Karte</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>

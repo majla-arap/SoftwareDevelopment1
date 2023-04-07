@@ -1,0 +1,162 @@
+<body>
+<p></p>
+<button type="button" class="button" (click)="btnNovi()">Nova karta</button>
+<br>
+<br>
+
+<label>Izaberite let za pretragu</label>
+<select  class="select" [(ngModel)]="nrSelect" (change)="basedOnSel($event)">
+  <option *ngFor="let l of this.letPodaci" [value]="l.letID"> {{l.sifraLeta}}</option>
+
+</select>
+<br>
+<br>
+<h4>Lista karti</h4>
+
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Vrijeme polaska</th>
+    <th>Vrijeme dolaska</th>
+    <th>Cijena</th>
+    <th>Aktivna</th>
+    <th>Let</th>
+    <th>Sjedište</th>
+    <th>Tip karte</th>
+
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getKartaPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.vrijemepolaska}}</td>
+    <td>{{s.vrijemedolaska}}</td>
+    <td>{{s.cijena}}</td>
+    <td>{{s.aktivna}}</td>
+    <td>{{s.sifra}}</td>
+    <td>{{s.tip}}</td>
+    <td>
+      <button class="button" (click)="obrisi(s)">Obrisi</button>
+      <button class="button" (click)="detalji(s)">Detalji</button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div>
+  <button class="button"  (click)="Preuzmi(1)">1</button>
+  <button class="button"  (click)="Preuzmi(2)">2</button>
+  <button class="button"  (click)="Preuzmi(3)">3</button>
+  <button class="button"  (click)="Preuzmi(4)">4</button>
+  <button class="button"  (click)="Preuzmi(5)">5</button>
+</div>
+</body>
+<div  [formGroup]="frmKartaPodaci" *ngIf="_isShow" class="modal fade show" id="exampleModalLive1" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel1">Add kartu</h5>
+        <button type="button" class="btn-close" (click)="_isShow = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Vrijeme polaska</label>
+            <input type="text" formControlName="vrPol" class="form-control" [(ngModel)]="vrijemepol"  placeholder="vrijeme polaska">
+            <small *ngIf="frmKartaPodaci.get('vrPol')!.invalid && frmKartaPodaci.get('vrPol')!.touched" class="text-danger">Unos obavezan</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Vrijeme dolaska</label>
+            <input type="text" formControlName="vrDol" class="form-control" [(ngModel)]="vrijemedol"  placeholder="vrijeme dolaska">
+            <small *ngIf="frmKartaPodaci.get('vrDol')!.invalid && frmKartaPodaci.get('vrDol')!.touched" class="text-danger">Unos obavezan</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Cijena</label>
+            <input formControlName="Cijena" class="form-control" [(ngModel)]="Cijena"  placeholder="Cijena">
+            <small *ngIf="frmKartaPodaci.get('Cijena')!.invalid && frmKartaPodaci.get('Cijena')!.touched" class="text-danger">Unos obavezan</small>
+          </div>
+
+          <div class="mb-3 form-check">
+            <input type="checkbox" formControlName="IsAktivan" class="form-check-input" [(ngModel)]="IsAktivan"  placeholder="Aktivan">
+            <label class="form-check-label">Aktivan</label>
+            <small *ngIf="frmKartaPodaci.get('IsAktivan')!.invalid && frmKartaPodaci.get('IsAktivan')!.touched" class="text-danger">Unos obavezan</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Let</label>
+            <select class="form-control" formControlName="letID" [(ngModel)]="letID" (change)="letKarta($event)" >
+              <option *ngFor="let l of this.letPodaci" [value]="l.id"> {{l.sifraLeta}}</option>
+
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tip karte</label>
+            <select class="form-control" formControlName="tipID" [(ngModel)]="tipID" (change)="tipKarta($event)" >
+              <option *ngFor="let l of this.tipPodaci" [value]="l.id"> {{l.naziv}}</option>
+
+            </select>
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="_isShow = false">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!validacija()" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+<div *ngIf="odabranaKarta!=null && odabranaKarta.prikazi" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">edit karta</h5>
+        <button type="button" class="btn-close" (click)="odabranaKarta.prikazi = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Vrijeme polaska</label>
+            <input type="text"  class="form-control" [(ngModel)]="odabranaKarta.vrijemepolaska"  placeholder="vrijeme polaska">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Vrijeme dolaska</label>
+            <input type="text" class="form-control" [(ngModel)]="odabranaKarta.vrijemedolaska"  placeholder="vrijeme dolaska">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Cijena</label>
+            <input class="form-control" [(ngModel)]="odabranaKarta.cijena"  placeholder="Cijena">
+          </div>
+
+          <div class="mb-3 form-check">
+            <input type="checkbox"  class="form-check-input" [(ngModel)]="odabranaKarta.aktivna"  placeholder="Aktivan">
+            <label class="form-check-label">Aktivan</label>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Let</label>
+            <select class="form-control" [(ngModel)]="odabranaKarta.letID" >
+              <option *ngFor="let l of this.letPodaci" [value]="l.id"> {{l.sifraLeta}}</option>
+
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tip karte</label>
+            <select class="form-control"  [(ngModel)]="odabranaKarta.tipID" >
+              <option *ngFor="let l of this.tipPodaci" [value]="l.id"> {{l.naziv}}</option>
+
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="odabranaKarta = null " >Close</button>
+            <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
